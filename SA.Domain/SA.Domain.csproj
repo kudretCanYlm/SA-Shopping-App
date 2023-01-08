@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Domains\Basket\" />
+    <Folder Include="Domains\Comment\" />
+    <Folder Include="Domains\Chat\" />
+    <Folder Include="Domains\Message\" />
+    <Folder Include="Domains\Location\" />
+    <Folder Include="Domains\User\" />
+    <Folder Include="Domains\Product\" />
+  </ItemGroup>
+
+</Project>
