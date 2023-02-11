@@ -4,7 +4,12 @@ using SA.Data.Extensions;
 using SA.Domain.Domains.Auth;
 using SA.Domain.Domains.Category;
 using SA.Domain.Domains.Chat;
+using SA.Domain.Domains.Comment;
+using SA.Domain.Domains.Location;
 using SA.Domain.Domains.Media;
+using SA.Domain.Domains.Order;
+using SA.Domain.Domains.Product;
+using SA.Domain.Domains.Saller;
 using SA.Domain.Domains.User;
 using System;
 using System.Collections.Generic;
@@ -14,9 +19,9 @@ using System.Threading.Tasks;
 
 namespace SA.Data.Context
 {
-	public class SAContext:DbContext,IBaseDbContext
+	public class SAContext : DbContext, IBaseDbContext
 	{
-		public SAContext(DbContextOptions options) :base(options)
+		public SAContext(DbContextOptions options) : base(options)
 		{
 
 		}
@@ -30,6 +35,19 @@ namespace SA.Data.Context
 		public DbSet<ImageEntity> Image { get; set; }
 		public DbSet<UserEntity> User { get; set; }
 		public DbSet<UserDetailEntity> UserDetail { get; set; }
+		public DbSet<CommentEntity> Comment { get; set; }
+		public DbSet<CommentReplyEntity> CommentReply { get; set; }
+		public DbSet<AddressEntity> Address { get; set; }
+		public DbSet<CityEntity> City { get; set; }
+		public DbSet<CountryEntity> Country { get; set; }
+		public DbSet<OrderDetailsEntity> OrderDetails { get; set; }
+		public DbSet<OrderEntity> Order { get; set; }
+		public DbSet<ProductCategoryEntity> ProductCategory { get; set; }
+		public DbSet<ProductEntity> Product { get; set; }
+		public DbSet<SallerProductEntity> SallerProduct { get; set; }
+		public DbSet<SallerEntity> Saller { get; set; }
+		public DbSet<UserRolesEntity> UserRoles { get; set; }
+		
 
 		//DBSET -> End
 
@@ -45,18 +63,18 @@ namespace SA.Data.Context
 			base.OnModelCreating(modelBuilder);
 		}
 
-		public void Commit()
+		public async Task Commit()
 		{
-			base.SaveChanges();
+			await base.SaveChangesAsync();
 		}
 
-		public void BeginTransaction()
+		public async Task BeginTransaction()
 		{
-			base.Database.BeginTransaction();
+			await base.Database.BeginTransactionAsync();
 		}
-		public void RollBack()
+		public async Task RollBack()
 		{
-			base.Database.BeginTransaction().Rollback();
+			await base.Database.BeginTransaction().RollbackAsync();
 		}
 
 	}
