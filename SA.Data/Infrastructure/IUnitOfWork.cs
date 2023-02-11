@@ -5,8 +5,8 @@ namespace SA.Data.Infrastructure
 	public interface IUnitOfWork<DbContext> where DbContext : Microsoft.EntityFrameworkCore.DbContext, IBaseDbContext
 	{
 		
-		void Commit();
-		void BeginTransaction();
-		void RollBack();
+		Task Commit();
+		Task BeginTransaction();
+		Task RollBack();
 	}
 }

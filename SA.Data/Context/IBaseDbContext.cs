@@ -2,9 +2,9 @@
 {
 	public interface IBaseDbContext
 	{
-		void Commit();
+		Task Commit();
 
-		void BeginTransaction();
-		void RollBack();
+		Task BeginTransaction();
+		Task RollBack();
 	}
 }

@@ -23,19 +23,19 @@ namespace SA.Data.Infrastructure
 		}
 
 
-		public void BeginTransaction()
+		public async Task BeginTransaction()
 		{
-			DbContextV.BeginTransaction();
+			await DbContextV.BeginTransaction();
 		}
 
-		public void Commit()
+		public async Task Commit()
 		{
-			DbContextV.Commit();
+			await DbContextV.Commit();
 		}
 
-		public void RollBack()
+		public async Task RollBack()
 		{
-			DbContextV.RollBack();
+			await DbContextV.RollBack();
 		}
 	}
 }
