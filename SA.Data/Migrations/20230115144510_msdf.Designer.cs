@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SA.Data.Context;
 
@@ -11,9 +12,11 @@ using SA.Data.Context;
 namespace SA.Data.Migrations
 {
     [DbContext(typeof(SAContext))]
-    partial class SAContextModelSnapshot : ModelSnapshot
+    [Migration("20230115144510_msdf")]
+    partial class msdf
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -710,8 +713,6 @@ namespace SA.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GuidProductId");
-
                     b.ToTable("SallerProduct", (string)null);
                 });
 
@@ -943,17 +944,6 @@ namespace SA.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("SA.Domain.Domains.Product.SallerProductEntity", b =>
-                {
-                    b.HasOne("SA.Domain.Domains.Product.ProductEntity", "Product")
-                        .WithMany()
-                        .HasForeignKey("GuidProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("SA.Domain.Domains.Saller.SallerEntity", b =>

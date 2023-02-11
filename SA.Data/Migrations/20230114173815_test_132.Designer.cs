@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SA.Data.Context;
 
@@ -11,9 +12,11 @@ using SA.Data.Context;
 namespace SA.Data.Migrations
 {
     [DbContext(typeof(SAContext))]
-    partial class SAContextModelSnapshot : ModelSnapshot
+    [Migration("20230114173815_test_132")]
+    partial class test132
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,12 +56,6 @@ namespace SA.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -67,8 +64,6 @@ namespace SA.Data.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Login", (string)null);
                 });
@@ -710,8 +705,6 @@ namespace SA.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GuidProductId");
-
                     b.ToTable("SallerProduct", (string)null);
                 });
 
@@ -836,6 +829,9 @@ namespace SA.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("LoginId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -846,6 +842,8 @@ namespace SA.Data.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LoginId");
 
                     b.ToTable("User", (string)null);
                 });
@@ -880,17 +878,6 @@ namespace SA.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("SA.Domain.Domains.Auth.LoginEntity", b =>
-                {
-                    b.HasOne("SA.Domain.Domains.User.UserEntity", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SA.Domain.Domains.Category.SubCategoryEntity", b =>
@@ -945,17 +932,6 @@ namespace SA.Data.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("SA.Domain.Domains.Product.SallerProductEntity", b =>
-                {
-                    b.HasOne("SA.Domain.Domains.Product.ProductEntity", "Product")
-                        .WithMany()
-                        .HasForeignKey("GuidProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("SA.Domain.Domains.Saller.SallerEntity", b =>
                 {
                     b.HasOne("SA.Domain.Domains.User.UserEntity", "SallerOwner")
@@ -984,6 +960,17 @@ namespace SA.Data.Migrations
                     b.Navigation("Address");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SA.Domain.Domains.User.UserEntity", b =>
+                {
+                    b.HasOne("SA.Domain.Domains.Auth.LoginEntity", "Login")
+                        .WithMany()
+                        .HasForeignKey("LoginId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Login");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SA.Data.Context;
 
@@ -11,9 +12,11 @@ using SA.Data.Context;
 namespace SA.Data.Migrations
 {
     [DbContext(typeof(SAContext))]
-    partial class SAContextModelSnapshot : ModelSnapshot
+    [Migration("20230112132359_order_product_saller_added")]
+    partial class orderproductsalleradded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,22 +56,11 @@ namespace SA.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Login", (string)null);
                 });
@@ -104,9 +96,6 @@ namespace SA.Data.Migrations
 
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -148,9 +137,6 @@ namespace SA.Data.Migrations
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -187,9 +173,6 @@ namespace SA.Data.Migrations
 
                     b.Property<Guid>("UserSecondId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -232,9 +215,6 @@ namespace SA.Data.Migrations
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -279,9 +259,6 @@ namespace SA.Data.Migrations
                     b.Property<int>("ToWho")
                         .HasColumnType("int");
 
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CommentOwnerId");
@@ -322,9 +299,6 @@ namespace SA.Data.Migrations
 
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -380,9 +354,6 @@ namespace SA.Data.Migrations
                     b.Property<Guid>("SubcityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.ToTable("Address", (string)null);
@@ -418,9 +389,6 @@ namespace SA.Data.Migrations
 
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -461,9 +429,6 @@ namespace SA.Data.Migrations
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.ToTable("Country", (string)null);
@@ -491,12 +456,13 @@ namespace SA.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<byte[]>("ImageData")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
-
-                    b.Property<Guid>("ImageOwnerId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ImageType")
                         .HasColumnType("int");
@@ -506,9 +472,6 @@ namespace SA.Data.Migrations
 
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -538,9 +501,6 @@ namespace SA.Data.Migrations
 
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -580,9 +540,6 @@ namespace SA.Data.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.ToTable("Order", (string)null);
@@ -617,9 +574,6 @@ namespace SA.Data.Migrations
 
                     b.Property<Guid>("ProductSubCategoryId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -664,9 +618,6 @@ namespace SA.Data.Migrations
                     b.Property<decimal>("ProductPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.ToTable("Product", (string)null);
@@ -705,12 +656,7 @@ namespace SA.Data.Migrations
                     b.Property<Guid>("SallerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("GuidProductId");
 
                     b.ToTable("SallerProduct", (string)null);
                 });
@@ -749,9 +695,6 @@ namespace SA.Data.Migrations
 
                     b.Property<Guid>("SallerOwnerId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -798,9 +741,6 @@ namespace SA.Data.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
@@ -836,16 +776,18 @@ namespace SA.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("LoginId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("LoginId");
 
                     b.ToTable("User", (string)null);
                 });
@@ -874,23 +816,9 @@ namespace SA.Data.Migrations
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.ToTable("UserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("SA.Domain.Domains.Auth.LoginEntity", b =>
-                {
-                    b.HasOne("SA.Domain.Domains.User.UserEntity", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SA.Domain.Domains.Category.SubCategoryEntity", b =>
@@ -945,17 +873,6 @@ namespace SA.Data.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("SA.Domain.Domains.Product.SallerProductEntity", b =>
-                {
-                    b.HasOne("SA.Domain.Domains.Product.ProductEntity", "Product")
-                        .WithMany()
-                        .HasForeignKey("GuidProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("SA.Domain.Domains.Saller.SallerEntity", b =>
                 {
                     b.HasOne("SA.Domain.Domains.User.UserEntity", "SallerOwner")
@@ -984,6 +901,17 @@ namespace SA.Data.Migrations
                     b.Navigation("Address");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SA.Domain.Domains.User.UserEntity", b =>
+                {
+                    b.HasOne("SA.Domain.Domains.Auth.LoginEntity", "Login")
+                        .WithMany()
+                        .HasForeignKey("LoginId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Login");
                 });
 #pragma warning restore 612, 618
         }

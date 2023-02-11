@@ -12,7 +12,7 @@ using SA.Data.Context;
 namespace SA.Data.Migrations
 {
     [DbContext(typeof(SAContext))]
-    [Migration("20230108111440_first-mig")]
+    [Migration("20230112104002_first-mig")]
     partial class firstmig
     {
         /// <inheritdoc />
@@ -230,6 +230,86 @@ namespace SA.Data.Migrations
                     b.ToTable("Message", (string)null);
                 });
 
+            modelBuilder.Entity("SA.Domain.Domains.Comment.CommentEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CommentOwnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ToWho")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentOwnerId");
+
+                    b.ToTable("Comment", (string)null);
+                });
+
+            modelBuilder.Entity("SA.Domain.Domains.Comment.CommentReplyEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CommentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CommentReply")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CommentReplyOwnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CommentReply", (string)null);
+                });
+
             modelBuilder.Entity("SA.Domain.Domains.Media.ImageEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -306,7 +386,12 @@ namespace SA.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserDetail", (string)null);
                 });
@@ -390,6 +475,28 @@ namespace SA.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Chat");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SA.Domain.Domains.Comment.CommentEntity", b =>
+                {
+                    b.HasOne("SA.Domain.Domains.User.UserEntity", "CommentOwner")
+                        .WithMany()
+                        .HasForeignKey("CommentOwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CommentOwner");
+                });
+
+            modelBuilder.Entity("SA.Domain.Domains.User.UserDetailEntity", b =>
+                {
+                    b.HasOne("SA.Domain.Domains.User.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
