@@ -18,10 +18,6 @@ namespace SA.Domain.Domains.Category
 
 		public string CategoryName { get; set; }
 		public string ContentText { get; set; }
-		public Guid ImageId { get; set; }
-
-		[ForeignKey(nameof(ImageId))]
-		public ImageEntity Image { get; set; }
 
 		protected override IEnumerable<object> GetEqualityComponents()
 		{
