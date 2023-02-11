@@ -25,6 +25,7 @@ namespace SA.Domain.Base
 		public Guid? DeletedBy { get; set; }
 		public Guid? ModifiedBy { get; set; }
 		public Guid? CreatedBy { get; set; }
+		public bool isDeleted { get; set; }
 
 	}
 }
