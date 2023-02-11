@@ -1,4 +1,5 @@
 ﻿using SA.Domain.Base;
+using SA.Domain.Domains.Location;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SA.Domain.Domains.User
@@ -17,7 +18,10 @@ namespace SA.Domain.Domains.User
 
 		[ForeignKey(nameof(UserId))]
 		public UserEntity User { get; set; }
+		public Guid AddressId { get; set; }
 
+		[ForeignKey(nameof(AddressId))]
+		public AddressEntity Address { get; set; }
 
 		protected override IEnumerable<object> GetEqualityComponents()
 		{
