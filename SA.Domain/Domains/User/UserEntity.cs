@@ -13,10 +13,6 @@ namespace SA.Domain.Domains.User
 
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
-		public Guid LoginId { get; set; }
-
-		[ForeignKey(nameof(LoginId))]
-		public LoginEntity Login { get; set; }
 
 		protected override IEnumerable<object> GetEqualityComponents()
 		{
