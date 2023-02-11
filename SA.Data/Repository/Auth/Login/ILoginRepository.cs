@@ -1,4 +1,5 @@
-﻿using SA.Data.Repository.Base;
+﻿using SA.Application.Contracts.Dtos.Auth.Login;
+using SA.Data.Repository.Base;
 using SA.Domain.Domains.Auth;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,6 @@ namespace SA.Data.Repository.Auth.Login
 {
 	public interface ILoginRepository:IRepository<LoginEntity>
 	{
+		Task<bool> SignInBool(LoginDto loginDto);
 	}
 }
