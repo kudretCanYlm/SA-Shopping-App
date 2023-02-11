@@ -8,12 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Domains\Basket\" />
-    <Folder Include="Domains\Comment\" />
-    <Folder Include="Domains\Chat\" />
-    <Folder Include="Domains\Message\" />
-    <Folder Include="Domains\Location\" />
-    <Folder Include="Domains\User\" />
-    <Folder Include="Domains\Product\" />
+    <Folder Include="Domains\Notification\" />
   </ItemGroup>
 
 </Project>
