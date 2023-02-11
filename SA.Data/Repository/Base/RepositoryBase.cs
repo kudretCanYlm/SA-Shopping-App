@@ -3,6 +3,7 @@ using SA.Data.Context;
 using SA.Data.Infrastructure;
 using SA.Domain.Base;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SA.Data.Repository.Base
 {
@@ -30,12 +31,14 @@ namespace SA.Data.Repository.Base
 			get { return dbContext ?? (dbContext = DatabaseFactory.Get()); }
 		}
 
-		public virtual void Add(T entity)
+		public virtual async Task Add(T entity)
 		{
-			dbSet.Add(entity);
+			entity.CreatedAt= DateTime.Now;
+			await dbSet.AddAsync(entity);
 		}
 		public virtual void Update(T entity)
 		{
+			entity.ModifiedAt = DateTime.Now;
 			dbSet.Attach(entity);
 			DbContextV.Entry(entity).State = EntityState.Modified;
 		}
@@ -44,42 +47,51 @@ namespace SA.Data.Repository.Base
 		{
 			foreach (var entity in entities)
 			{
-				dbSet.Attach(entity);
+                entity.ModifiedAt = DateTime.Now;
+                dbSet.Attach(entity);
 				DbContextV.Entry(entity).State = EntityState.Modified;
 			}
 		}
 
 		public virtual void Delete(T entity)
 		{
-			dbSet.Remove(entity);
-		}
+            entity.DeletedAt = DateTime.Now;
+			entity.isDeleted = true;
+            dbSet.Attach(entity);
+            DbContextV.Entry(entity).State = EntityState.Modified;
+        }
 		public virtual void Delete(Expression<Func<T, bool>> where)
 		{
 			IEnumerable<T> objects = dbSet.Where<T>(where).AsEnumerable();
 			foreach (T obj in objects)
-				dbSet.Remove(obj);
+			{
+                obj.DeletedAt = DateTime.Now;
+				obj.isDeleted= true;
+                dbSet.Attach(obj);
+                DbContextV.Entry(obj).State = EntityState.Modified;
+            }
 		}
-		public virtual T GetById(Guid id)
+		public virtual async Task<T> GetById(Guid id)
 		{
-			return dbSet.Find(id);
+			return await dbSet.Where(x => x.isDeleted == false && x.Id==id).FirstOrDefaultAsync();
 		}
-		public virtual T GetById(string id)
+		public virtual async Task<T> GetById(string id)
 		{
-			return dbSet.Find(id);
+			return await dbSet.FindAsync(id);
 		}
-		public virtual IEnumerable<T> GetAll()
+		public virtual async Task<IEnumerable<T>> GetAll()
 		{
-			return dbSet.ToList();
+			return await dbSet.Where(x => x.isDeleted == false).ToListAsync();
 		}
 
-		public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where)
+		public virtual async Task<IEnumerable<T>> GetMany(Expression<Func<T, bool>> where)
 		{
-			return dbSet.Where(where).ToList();
+			return await dbSet.Where(x => x.isDeleted == false).Where(where).ToListAsync();
 		}
 
 		public virtual IQueryable<T> GetManyQuery(Expression<Func<T, bool>> where)
 		{
-			return dbSet.Where(where);
+			return dbSet.Where(x=>x.isDeleted==false).Where(where);
 		}
 
 
@@ -98,9 +110,9 @@ namespace SA.Data.Repository.Base
 		//	return result;
 		//}
 
-		public T Get(Expression<Func<T, bool>> where)
+		public async Task<T> Get(Expression<Func<T, bool>> where)
 		{
-			return dbSet.Where(where).FirstOrDefault<T>();
+			return await dbSet.Where(where).FirstOrDefaultAsync<T>();
 		}
 
 	}
